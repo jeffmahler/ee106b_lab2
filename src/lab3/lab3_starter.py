@@ -1,6 +1,6 @@
 import numpy as np
 import obj_file
-#import tf
+import tf
 
 SPRAY_BOTTLE_MESH_FILENAME = 'data/spray.obj'
 
@@ -11,6 +11,7 @@ def contacts_to_baxter_hand_pose(contact1, contact2):
     # compute gripper center and axis
     center = 0.5 * (c1 + c2)
     y_axis = c2 - c1
+    y_axis = y_axis / np.linalg.norm(y_axis)
     z_axis = np.array([y_axis[1], -y_axis[0], 0]) # the z axis will always be in the table plane for now
     z_axis = z_axis / np.linalg.norm(z_axis)
     x_axis = np.cross(y_axis, z_axis)
@@ -42,12 +43,10 @@ if __name__ == '__main__':
     # 2. Check for force closure
 
     # 3. Convert each grasp to a hand pose
-    """
     contact1 = vertices[0]
     contact2 = vertices[100]
     t_obj_gripper, q_obj_gripper = contacts_to_baxter_hand_pose(contact1, contact2)
-    print t_obj_gripper
-    print q_obj_gripper
-    """
+    print 'Translation', t_obj_gripper
+    print 'Rotation', q_obj_gripper
 
     # 4. Execute on the actual robot
