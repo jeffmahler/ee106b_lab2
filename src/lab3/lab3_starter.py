@@ -1,6 +1,6 @@
 import numpy as np
 import obj_file
-import tf
+import transformations
 
 SPRAY_BOTTLE_MESH_FILENAME = 'data/spray.obj'
 
@@ -22,7 +22,7 @@ def contacts_to_baxter_hand_pose(contact1, contact2):
     T_obj_gripper = np.eye(4)
     T_obj_gripper[:3,:3] = R_obj_gripper
     T_obj_gripper[:3,3] = t_obj_gripper
-    q_obj_gripper = tf.transformations.quaternion_from_matrix(T_obj_gripper)
+    q_obj_gripper = transformations.quaternion_from_matrix(T_obj_gripper)
 
     return t_obj_gripper, q_obj_gripper 
 
