@@ -2,8 +2,6 @@ import logging
 import os
 import sys
 
-import IPython
-
 import mesh
 
 class ObjFile:

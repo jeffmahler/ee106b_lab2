@@ -1,6 +1,6 @@
 #!/usr/bin/env python  
 import roslib
-roslib.load_manifest('lab7')
+roslib.load_manifest('lab3')
 import rospy
 import math
 import numpy as np
