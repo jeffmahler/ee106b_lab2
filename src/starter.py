@@ -3,8 +3,9 @@ Starter script for EE106B grasp planning lab
 Author: Jeff Mahler
 """
 import numpy as np
-import obj_file
-import transformations
+
+from core import RigidTransform
+from meshpy import ObjFile
 
 SPRAY_BOTTLE_MESH_FILENAME = 'data/spray.obj'
 
@@ -23,15 +24,13 @@ def contacts_to_baxter_hand_pose(contact1, contact2):
     # convert to hand pose
     R_obj_gripper = np.array([x_axis, y_axis, z_axis]).T
     t_obj_gripper = center
-    T_obj_gripper = np.eye(4)
-    T_obj_gripper[:3,:3] = R_obj_gripper
-    T_obj_gripper[:3,3] = t_obj_gripper
-    q_obj_gripper = transformations.quaternion_from_matrix(T_obj_gripper)
-
-    return t_obj_gripper, q_obj_gripper 
+    return RigidTransform(rotation=R_obj_gripper, 
+                          translation=t_obj_gripper,
+                          from_frame='gripper',
+                          to_frame='obj')
 
 if __name__ == '__main__':
-    of = obj_file.ObjFile(SPRAY_BOTTLE_MESH_FILENAME)
+    of = ObjFile(SPRAY_BOTTLE_MESH_FILENAME)
     mesh = of.read()
 
     vertices = mesh.vertices
@@ -49,8 +48,10 @@ if __name__ == '__main__':
     # 3. Convert each grasp to a hand pose
     contact1 = vertices[0]
     contact2 = vertices[100]
-    t_obj_gripper, q_obj_gripper = contacts_to_baxter_hand_pose(contact1, contact2)
-    print 'Translation', t_obj_gripper
-    print 'Rotation', q_obj_gripper
+    T_obj_gripper = contacts_to_baxter_hand_pose(contact1, contact2)
+    print 'Translation', T_obj_gripper.translation
+    print 'Rotation', T_obj_gripper.quaternion
+
+    pose_msg = T_obj_gripper.pose_msg
 
     # 4. Execute on the actual robot
