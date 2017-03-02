@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Starter script for EE106B grasp planning lab
 Author: Jeff Mahler
