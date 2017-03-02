@@ -4,10 +4,11 @@ Author: Jeff Mahler
 """
 import numpy as np
 
-from core import RigidTransform
+from core import RigidTransform, Point
 from meshpy import ObjFile
+from visualization import Visualizer3D as vis
 
-SPRAY_BOTTLE_MESH_FILENAME = 'data/spray.obj'
+SPRAY_BOTTLE_MESH_FILENAME = 'data/objects/spray.obj'
 
 def contacts_to_baxter_hand_pose(contact1, contact2):
     c1 = np.array(contact1)
@@ -46,12 +47,19 @@ if __name__ == '__main__':
     # 2. Check for force closure
 
     # 3. Convert each grasp to a hand pose
-    contact1 = vertices[0]
-    contact2 = vertices[100]
+    contact1 = vertices[500]
+    contact2 = vertices[2000]
     T_obj_gripper = contacts_to_baxter_hand_pose(contact1, contact2)
     print 'Translation', T_obj_gripper.translation
     print 'Rotation', T_obj_gripper.quaternion
 
     pose_msg = T_obj_gripper.pose_msg
+
+    vis.figure()
+    vis.mesh(mesh)
+    vis.points(Point(contact1, frame='test'))
+    vis.points(Point(contact2, frame='test'))
+    vis.pose(T_obj_gripper, alpha=0.05)
+    vis.show()
 
     # 4. Execute on the actual robot
