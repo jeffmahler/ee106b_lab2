@@ -55,6 +55,7 @@ if __name__ == '__main__':
 
     pose_msg = T_obj_gripper.pose_msg
 
+    # 3d visualization to help debug
     vis.figure()
     vis.mesh(mesh)
     vis.points(Point(contact1, frame='test'))

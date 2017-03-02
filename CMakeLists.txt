@@ -143,6 +143,7 @@ catkin_package(
 ## in contrast to setup.py, you can choose the destination
 install(PROGRAMS
   nodes/object_pose_publisher
+  src/starter.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   )
 
