@@ -23,8 +23,8 @@ baxter_hostname="robotbaxter.local"
 
 # Set *Either* your computers ip address or hostname. Please note if using
 # your_hostname that this must be resolvable to Baxter.
-your_ip="192.168.1.103"
-#your_hostname="my_computer.local"
+#your_ip="192.168.XXX.XXX"
+your_hostname="$(hostname --short).local"
 
 # Specify ROS distribution (e.g. indigo, hydro, etc.)
 ros_version="indigo"
@@ -149,7 +149,7 @@ has been built (source /opt/ros/\${ros_version}/setup.sh; catkin_make).\n\
 		export ROS_MASTER_URI="http://${baxter_hostname}:11311"
 
 	# source the catkin setup bash script
-	source /scratch/shared/baxter_ws/devel/setup.bash
+	source devel/setup.bash
 
 	# setup the bash prompt
 	export __ROS_PROMPT=\${__ROS_PROMPT:-0}
